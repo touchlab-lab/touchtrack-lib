@@ -49,12 +49,12 @@ public class ReportIssueDialog {
 
     public void showReportDialog(final Activity activity, String title, String message, boolean includeScreenshotOption, boolean includeRecordAudioOption) {
 
-
+        //Create dialog and set title and message
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(title);
         alert.setMessage(message);
         View issueReportView = LayoutInflater.from(activity).inflate(R.layout.report_issue_dialog, null);
-
+        //pull out the fields for the dialog.....
         final EditText input = (EditText) issueReportView.findViewById(R.id.issueText);
         final CheckBox includeScreenshot = (CheckBox) issueReportView.findViewById(R.id.includeScreenshot);
         if (!includeScreenshotOption)
@@ -69,34 +69,14 @@ public class ReportIssueDialog {
         final Button audioControlBtn = this.audioControlBtn;
         this.audioProgress = (ProgressBar) issueReportView.findViewById(R.id.audioProgress);
         this.audioProgress.setHorizontalScrollBarEnabled(true);
-
+        //wire controls to the audio action button....
         audioControlBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (audioControlBtn.getText().toString().equalsIgnoreCase("Record") || audioControlBtn.getText().toString().equalsIgnoreCase("Re-Record")) {
-
                     if(hasRecorded){
-                        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                        alert.setTitle("Discard Message?");
-                        alert.setMessage("Discard Previously Recorded Message?");
-                        alert.setPositiveButton("Discard",new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ar.startRecording(activity);
-                                restarttimebar();
-                                audioControlBtn.setText("Stop");
-                                hasRecorded = false;
-                            }
-                        });
-                        alert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-                        alert.create().show();
-
+                        rerecordBtnPressed(activity);
                     }
                     else{
                         ar.startRecording(activity);
@@ -113,6 +93,7 @@ public class ReportIssueDialog {
             }
         });
 
+        //toggles visibility of audio panel, triggers dialog to discard audio message, resets panel to start state
         includeAudioclip.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -122,38 +103,15 @@ public class ReportIssueDialog {
                 }
                 else{
                      if(hasRecorded  || progressOn){
-                        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                        alert.setTitle("Discard Message?");
-                        alert.setMessage("Discard Previously Recorded Message?");
-                        alert.setPositiveButton("Discard",new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ar.stopRecording();
-                                ar.discard(activity);
-                                audioControlBtn.setText("Record");
-                                hasRecorded = false;
-                                stoptimebar();
-                                audioPanel.setVisibility(View.GONE);
-                            }
-
-                        });
-                        alert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                                includeAudioclip.setChecked(true);
-                            }
-                        });
-                        alert.create().show();
+                       deselctAudioClip(activity,audioPanel,includeAudioclip);
                     }else
                          audioPanel.setVisibility(View.GONE);
-
                 }
             }
         });
-
+        //set view to inflated view
         alert.setView(issueReportView);
-
+        //meat of the dialog....this is where we send off the issue and possibly the screenshot and audio clip...
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String message = input.getText().toString();
@@ -176,17 +134,66 @@ public class ReportIssueDialog {
 
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                if (audioControlBtn.getText().toString().equalsIgnoreCase("Stop") && ar != null)
-                        ar.stopRecording();
+                if (audioControlBtn.getText().toString().equalsIgnoreCase("Stop") && ar != null){
+                    ar.stopRecording();
+                    ar.discard(activity);
+                }
             }
         });
         alert.show();
     }
 
+    private void deselctAudioClip(final Activity activity, final LinearLayout audioPanel, final CheckBox includeAudioclip) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setTitle("Discard Message?");
+        alert.setMessage("Discard Previously Recorded Message?");
+        alert.setPositiveButton("Discard", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ar.stopRecording();
+                ar.discard(activity);
+                audioControlBtn.setText("Record");
+                hasRecorded = false;
+                stoptimebar();
+                audioPanel.setVisibility(View.GONE);
+            }
+
+        });
+        alert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                includeAudioclip.setChecked(true);
+            }
+        });
+        alert.create().show();
+    }
+
+    private void rerecordBtnPressed(final Activity activity) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setTitle("Discard Message?");
+        alert.setMessage("Discard Previously Recorded Message?");
+        alert.setPositiveButton("Discard", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ar.startRecording(activity);
+                restarttimebar();
+                audioControlBtn.setText("Stop");
+                hasRecorded = false;
+            }
+        });
+        alert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alert.create().show();
+    }
+
     private class AudioRecorder {
 
         private MediaRecorder mr = null;
-
         public void startRecording(Context context) {
 
             if (mr != null)
