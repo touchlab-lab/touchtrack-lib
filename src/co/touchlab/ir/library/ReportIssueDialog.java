@@ -37,10 +37,10 @@ public class ReportIssueDialog {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private boolean hasRecorded = false;
     private ProgressBar audioProgress;
     private Button audioControlBtn;
     private final AudioRecorder ar = new AudioRecorder();
-    ;
 
 
     public void showBasicDialog(final Activity a) {
@@ -74,14 +74,41 @@ public class ReportIssueDialog {
             @Override
             public void onClick(View view) {
 
-                if (audioControlBtn.getText().toString().equalsIgnoreCase("Record")) {
-                    ar.startRecording(activity);
-                    restarttimebar();
-                    audioControlBtn.setText("Stop");
+                if (audioControlBtn.getText().toString().equalsIgnoreCase("Record") || audioControlBtn.getText().toString().equalsIgnoreCase("Re-Record")) {
+
+                    if(hasRecorded){
+                        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                        alert.setTitle("Discard Message?");
+                        alert.setMessage("Discard Previously Recorded Message?");
+                        alert.setPositiveButton("Discard",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ar.startRecording(activity);
+                                restarttimebar();
+                                audioControlBtn.setText("Stop");
+                                hasRecorded = false;
+                            }
+                        });
+                        alert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        alert.create().show();
+
+                    }
+                    else{
+                        ar.startRecording(activity);
+                        restarttimebar();
+                        audioControlBtn.setText("Stop");
+                    }
+
                 } else if (audioControlBtn.getText().toString().equalsIgnoreCase("Stop")) {
+                    hasRecorded = true;
                     progressOn = false;
                     ar.stopRecording();
-                    audioControlBtn.setText("Record");
+                    audioControlBtn.setText("Re-Record");
                 }
             }
         });
@@ -89,10 +116,39 @@ public class ReportIssueDialog {
         includeAudioclip.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b)
+                if (b){
+                    stoptimebar();
                     audioPanel.setVisibility(View.VISIBLE);
-                else
-                    audioPanel.setVisibility(View.GONE);
+                }
+                else{
+                     if(hasRecorded  || progressOn){
+                        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                        alert.setTitle("Discard Message?");
+                        alert.setMessage("Discard Previously Recorded Message?");
+                        alert.setPositiveButton("Discard",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ar.stopRecording();
+                                ar.discard(activity);
+                                audioControlBtn.setText("Record");
+                                hasRecorded = false;
+                                stoptimebar();
+                                audioPanel.setVisibility(View.GONE);
+                            }
+
+                        });
+                        alert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                includeAudioclip.setChecked(true);
+                            }
+                        });
+                        alert.create().show();
+                    }else
+                         audioPanel.setVisibility(View.GONE);
+
+                }
             }
         });
 
@@ -173,6 +229,12 @@ public class ReportIssueDialog {
                 mr = null;
             }
         }
+
+        public void discard(Context context){
+            File af = new File(context.getFilesDir(), AUDIO_FILE_NAME);
+            if(af.exists())
+                af.delete();
+        }
     }
 
     public static String AUDIO_FILE_NAME = "audio_message.3gp";
@@ -196,8 +258,11 @@ public class ReportIssueDialog {
     Handler timebarhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (!progressOn)
+            if (!progressOn) {
+                if(msg.arg1 == 0 && !hasRecorded)
+                    audioProgress.setProgress(0);
                 return;
+            }
             if (msg.arg1 == 0) {
                 audioProgress.setProgress(0);
             }
