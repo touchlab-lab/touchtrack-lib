@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:id="@+id/appIcon"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:padding="5dp"
+                android:id="@+id/appName"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="A new test version of this app has been deployed.  Would you like to install it?"/>
+
+    <LinearLayout
+            android:id="@+id/buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/startDownload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Download And Install"/>
+
+        <Button
+            android:id="@+id/remindLater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Not Now"/>
+
+    </LinearLayout>
+
+    <ProgressBar android:id="@+id/downloadProgress"
+                 android:layout_gravity="center"
+                 style="?android:attr/progressBarStyleHorizontal"
+                 android:layout_width="200dip"
+                 android:layout_height="wrap_content"
+                 android:max="100"
+                 android:visibility="gone"
+                 android:progress="0" />
+
+</LinearLayout>
