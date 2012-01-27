@@ -4,4 +4,14 @@
       android:versionCode="1"
       android:versionName="1.0">
 
-</manifest> 
+    <application>
+        <receiver android:name=".UpdateAvailableReceiver">
+            <intent-filter>
+                <action android:name="co.touchlab.ir.NEW_VERSION_AVAILABLE"></action>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".UpdateDownloadActivity"/>
+    </application>
+
+</manifest>
