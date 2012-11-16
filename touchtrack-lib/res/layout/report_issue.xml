@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/report_issue_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_tiny"
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:layout_marginRight="@dimen/padding_medium"
+            android:layout_marginTop="@dimen/padding_medium"
+            android:text="@string/report_desc" />
+
+    <EditText
+            android:id="@+id/issue_text"
+            style="@style/Holo.EditText.Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_medium"
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:layout_marginRight="@dimen/padding_medium"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:inputType="textCapSentences"
+            android:gravity="top|left"
+            android:hint="@string/feedback_hint"
+            android:maxLines="3"
+            android:minLines="2" />
+
+    <CheckBox
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Include Screenshot"
+            android:id="@+id/includeScreenshot"/>
+
+    <CheckBox
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Include Audioclip"
+            android:id="@+id/includeAudioclip"/>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/audioPanel">
+
+        <Button
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/padding_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/audioControlBtn"
+                android:text="Record"/>
+
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_tiny"
+                android:layout_marginLeft="@dimen/padding_large"
+                android:layout_marginRight="@dimen/padding_medium"
+                android:layout_marginTop="@dimen/padding_medium"
+                android:id="@+id/audioProgress"
+                android:layout_gravity="center_vertical"
+                style="@style/Holo.ProgressBar.Horizontal.Light"
+                />
+    </LinearLayout>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:src="@color/gray" />
+
+    <Button
+            android:id="@+id/send_report"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:layout_gravity="bottom"
+            android:background="@drawable/abs__item_background_holo_light"
+            android:text="@string/send" />
+
+</LinearLayout>

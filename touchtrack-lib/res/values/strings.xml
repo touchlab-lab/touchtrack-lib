@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ACTIVITY_ENTRY_NAME</string>
+    <string name="update_app_notification_title">Update Available</string>
+    <string name="update_app_notification_message">A new version is available.  Click here to download and install.</string>
+    <string name="update_app_notification_text">Update Available</string>
+
+    <string name="fallen">BEEP, BLOOP</string>
+    <string name="help_us">Help us!</string>
+    <string name="close">Close</string>
+    <string name="report">Report</string>
+    <string name="feedback_desc">Send us a feedback, or report an issue. (System data will be sent)</string>
+    <string name="feedback_hint">Description (optional)</string>
+    <string name="send">Send</string>
+    <string name="report_desc">Report issue will send an error log and other info to our admins.</string>
+</resources>

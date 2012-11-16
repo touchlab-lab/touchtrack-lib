@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/touchtrack-lib.iml" filepath="$PROJECT_DIR$/touchtrack-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ActionBarSherlockLibrary/ActionBarSherlockLibrary.iml" filepath="$PROJECT_DIR$/ActionBarSherlockLibrary/ActionBarSherlockLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HoloEverywhereLib/HoloEverywhereLib.iml" filepath="$PROJECT_DIR$/HoloEverywhereLib/HoloEverywhereLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/touchtrack-lib/touchtrack-lib.iml" filepath="$PROJECT_DIR$/touchtrack-lib/touchtrack-lib.iml" />
     </modules>
   </component>
 </project>

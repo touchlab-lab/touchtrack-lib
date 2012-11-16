@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">ACTIVITY_ENTRY_NAME</string>
-    <string name="update_app_notification_title">Update Available</string>
-    <string name="update_app_notification_message">A new version is available.  Click here to download and install.</string>
-    <string name="update_app_notification_text">Update Available</string>
-</resources>

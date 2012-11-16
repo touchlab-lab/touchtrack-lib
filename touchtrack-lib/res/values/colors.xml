@@ -1,0 +1,18 @@
+<resources>
+    <color name="gray">#DDDDDD</color>
+    <color name="medium_gray">#99666666</color>
+    <color name="dark_gray">#333333</color>
+    <color name="crop_exterior">#9942c1f0</color>
+    <color name="crop_border">#cccccc</color>
+    <color name="light_blue">#42c1f0</color>
+    <color name="dark_blue">#006699</color>
+    <color name="txt_gray">#BABABA</color>
+    <color name="black_alpha">#99000000</color>
+    
+    <color name="wejit_blue">#FF42C1F0</color>
+    <color name="wejit_blue_alpha">#CC42C1F0</color>
+    <color name="wejit_medium_blue">#FF0099CC</color>
+    <color name="wejit_dark_blue">#FF006699</color>
+    <color name="wejit_off_white">#FFEEEEEE</color>
+    <color name="wejit_off_white_alpha">#CCEEEEEE</color>    
+</resources>

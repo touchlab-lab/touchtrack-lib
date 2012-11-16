@@ -1,0 +1,29 @@
+<resources>
+    <dimen name="crop_width">304dp</dimen>
+    <dimen name="crop_height">284dp</dimen>
+    <dimen name="crop_border_thickness">2dp</dimen>
+    <dimen name="widget_padding">8dp</dimen>
+    <dimen name="friend_list_image_size">64dp</dimen>
+    <dimen name="tiny_friend_image_size">32dp</dimen>
+
+    <dimen name="tiny_friend_image_margin">4dp</dimen>
+    <dimen name="tiny_friend_container_padding_left_right">8dp</dimen>
+
+    <dimen name="chips_max_height">120dp</dimen>
+    <dimen name="chip_padding">8dip</dimen>
+    <dimen name="chip_spacing">4dip</dimen>
+    <dimen name="chip_height">32dip</dimen>
+    <dimen name="chip_text_size">14sp</dimen>
+    
+    <dimen name="notif_drawer_width">290dp</dimen>
+    <dimen name="home_thumb">130dp</dimen>
+    <dimen name="publisher_pic">38dp</dimen>
+    <dimen name="home_thumb_image">114dp</dimen> <!-- Need this dimension minus the padding to crop images to size -->
+    <dimen name="list_thumb_image">64dp</dimen>
+
+    <dimen name="padding_tiny">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">12dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_xlarge">32dp</dimen>
+</resources>
